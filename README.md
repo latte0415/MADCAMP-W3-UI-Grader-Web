@@ -1,8 +1,31 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+이 프로젝트는 웹사이트 UI/UX 분석 서비스의 프론트엔드입니다.
+
+## 설정
+
+### 1. 환경 변수 설정
+
+프로젝트 루트에 `.env.local` 파일을 생성하고 다음 내용을 추가하세요:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+NEXT_PUBLIC_BACKEND_API_URL=http://localhost:8000
+```
+
+Supabase 프로젝트의 URL과 Anon Key는 Supabase 대시보드에서 확인할 수 있습니다.
+
+백엔드 API URL은 개발 환경에서는 `http://localhost:8000`을 사용하고, 프로덕션 환경에서는 Railway 등에 배포된 URL을 사용합니다.
+
+### 2. Supabase 인증 설정
+
+Supabase 대시보드에서 다음 OAuth 제공자를 설정해야 합니다:
+- Google
+
+각 제공자의 Client ID와 Client Secret을 Supabase 인증 설정에 추가하세요.
 
 ## Getting Started
 
-First, run the development server:
+개발 서버를 실행하세요:
 
 ```bash
 npm run dev
