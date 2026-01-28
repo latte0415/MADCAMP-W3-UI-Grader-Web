@@ -39,7 +39,6 @@ export default function LibraryPage() {
         return
       }
 
-      setIsLoading(true)
       setError(null)
 
       try {
@@ -63,7 +62,7 @@ export default function LibraryPage() {
     }
 
     loadRuns()
-  }, [router])
+  }, [])
 
   const handleItemClick = (runId: string) => {
     router.push(`/library/${runId}`)
