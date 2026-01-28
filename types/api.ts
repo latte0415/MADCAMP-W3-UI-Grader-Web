@@ -20,6 +20,12 @@ export interface AnalyzeResponse {
   message: string
 }
 
+export interface EvaluationResultResponse {
+  run_id: string
+  status: string
+  evaluation_result: SiteEvaluation
+}
+
 export interface SiteEvaluation {
   id: string
   run_id: string
@@ -33,6 +39,37 @@ export interface SiteEvaluation {
   path_count: number
   created_at: string
   target_url?: string
+  node_evaluations?: NodeEvaluation[]
+  edge_evaluations?: EdgeEvaluation[]
+  workflow_evaluations?: WorkflowEvaluation[]
+}
+
+export interface NodeEvaluation {
+  id: string
+  site_evaluation_id: string
+  node_id: string
+  url: string
+  learnability_score: number
+  efficiency_score: number
+  control_score: number
+  learnability_items: CheckItem[]
+  efficiency_items: CheckItem[]
+  control_items: CheckItem[]
+}
+
+export interface CheckItem {
+  element: {
+    tag: string
+    text: string
+    id: string
+    class: string
+    type: string
+  }
+  checks: {
+    name: string
+    status: 'PASS' | 'FAIL'
+    message: string
+  }[]
 }
 
 export interface SiteEvaluationListItem {
@@ -80,4 +117,62 @@ export interface RunsListResponse {
   total: number
   limit: number
   offset: number
+}
+
+export interface EdgeEvaluation {
+  edge_id: string
+  from_node_id?: string // Source node ID for grouping
+  action: string
+  result: {
+    learnability: {
+      score: number
+      passed: { check: string; message: string }[]
+      failed: { check: string; message: string }[]
+    }
+    efficiency: {
+      score: number
+      passed: { check: string; message: string }[]
+      failed: { check: string; message: string }[]
+      latency?: {
+        duration_ms: number
+        status: string
+        description: string
+      }
+    }
+    control: {
+      score: number
+      passed: { check: string; message: string }[]
+      failed: { check: string; message: string }[]
+    }
+  }
+}
+
+export interface WorkflowEvaluation {
+  path_index: number
+  path_summary: string
+  result: {
+    learnability: {
+      score: number
+      passed: { check: string; message: string }[]
+      failed: { check: string; message: string }[]
+    }
+    efficiency: {
+      score: number
+      passed: { check: string; message: string }[]
+      failed: { check: string; message: string }[]
+      interaction_efficiency?: {
+        total_estimated_time_s: number
+        klm_breakdown: any[]
+      }
+      target_size_spacing?: {
+        size_issues: any[]
+        fitts_issues: any[]
+      }
+    }
+    control: {
+      score: number
+      passed: { check: string; message: string }[]
+      failed: { check: string; message: string }[]
+    }
+  }
 }
