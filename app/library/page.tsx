@@ -16,7 +16,7 @@ export default function LibraryPage() {
   useEffect(() => {
     const loadRuns = async () => {
       const supabase = createClient()
-      
+
       // 사용자 인증 확인
       const {
         data: { user },
@@ -66,8 +66,7 @@ export default function LibraryPage() {
   }, [router])
 
   const handleItemClick = (runId: string) => {
-    // 추후 상세 화면 구현
-    alert(`상세 화면은 추후 구현 예정입니다. (Run ID: ${runId})`)
+    router.push(`/library/${runId}`)
   }
 
   const formatDate = (dateString: string) => {
@@ -143,13 +142,13 @@ export default function LibraryPage() {
     <div className="min-h-screen bg-gradient-to-br from-white via-gray-50/50 to-white relative overflow-hidden">
       {/* Subtle grid system */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:40px_40px] opacity-40"></div>
-      
+
       {/* Refined gradient orbs */}
-      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full blur-[120px] opacity-30 animate-float-slow" style={{background: 'radial-gradient(circle, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.04) 50%, transparent 70%)'}}></div>
-      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full blur-[100px] opacity-25 animate-float-delayed" style={{background: 'radial-gradient(circle, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.03) 50%, transparent 70%)'}}></div>
-      
+      <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full blur-[120px] opacity-30 animate-float-slow" style={{ background: 'radial-gradient(circle, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.04) 50%, transparent 70%)' }}></div>
+      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] rounded-full blur-[100px] opacity-25 animate-float-delayed" style={{ background: 'radial-gradient(circle, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.03) 50%, transparent 70%)' }}></div>
+
       <TopNavigation />
-      
+
       <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-24">
         <div className="mb-12">
           <h1 className="text-4xl sm:text-5xl font-bold mb-4 text-gray-900">
