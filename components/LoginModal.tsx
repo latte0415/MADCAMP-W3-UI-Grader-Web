@@ -31,40 +31,34 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Background overlay with enhanced blur */}
+      {/* Background overlay */}
       <div
-        className="absolute inset-0 bg-white/80 backdrop-blur-[40px] animate-in fade-in"
+        className="absolute inset-0 bg-white/90 backdrop-blur-[40px] animate-in fade-in"
         onClick={onClose}
       ></div>
 
-      {/* Animated gradient orbs in background */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gray-300/20 rounded-full blur-[100px] animate-pulse"></div>
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gray-200/15 rounded-full blur-[100px] animate-pulse delay-700"></div>
-
-      {/* Modal content - maximal glassmorphism */}
-      <div className="relative bg-white/70 backdrop-blur-[100px] rounded-3xl shadow-[0_8px_32px_0_rgba(0,0,0,0.15),inset_0_1px_0_0_rgba(255,255,255,0.8)] p-10 w-full max-w-md mx-4 border-2 border-gray-200/50 animate-in fade-in zoom-in-95 duration-200 before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-white/50 before:via-white/30 before:to-white/50 before:opacity-60 before:pointer-events-none after:absolute after:inset-[2px] after:rounded-3xl after:bg-gradient-to-br after:from-transparent after:via-white/40 after:to-white/60 after:pointer-events-none">
-        {/* Outer glow */}
-        <div className="absolute -inset-1 bg-gradient-to-r from-gray-200/40 via-gray-300/30 to-gray-200/40 rounded-3xl blur-xl opacity-50"></div>
-        <div className="flex justify-between items-center mb-10 relative z-10">
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(0,0,0,0.1)]">
+      {/* Modal content */}
+      <div className="relative bg-white/95 backdrop-blur-[100px] rounded-2xl shadow-xl p-8 w-full max-w-md mx-4 border border-gray-200/80 animate-in fade-in zoom-in-95 duration-200">
+        <div className="flex justify-between items-center mb-8">
+          <h2 className="text-2xl font-bold text-gray-950">
             Sign In
           </h2>
           <button
             onClick={onClose}
-            className="text-gray-600 hover:text-gray-900 text-3xl leading-none transition-all w-10 h-10 flex items-center justify-center rounded-xl hover:bg-gray-100/80 backdrop-blur-sm border border-gray-200/60 hover:border-gray-300/80 shadow-[0_4px_12px_0_rgba(0,0,0,0.08)] hover:shadow-[0_6px_20px_0_rgba(0,0,0,0.12)]"
+            className="text-gray-600 hover:text-gray-950 text-2xl leading-none transition-colors w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100"
           >
             ×
           </button>
         </div>
 
-        <div className="space-y-4 relative z-10">
+        <div className="space-y-4">
           <button
             onClick={handleGoogleLogin}
             disabled={isLoading}
-            className="w-full group flex items-center justify-center gap-4 px-6 py-5 bg-white/70 backdrop-blur-[40px] border-2 border-gray-200/60 rounded-xl hover:border-gray-300/80 hover:bg-white/80 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-[0_8px_32px_0_rgba(0,0,0,0.1),inset_0_1px_0_0_rgba(255,255,255,0.8)] hover:shadow-[0_12px_40px_0_rgba(0,0,0,0.15),inset_0_1px_0_0_rgba(255,255,255,0.9)] hover:scale-[1.02] active:scale-[0.98] before:absolute before:inset-0 before:rounded-xl before:bg-gradient-to-r before:from-white/30 before:to-transparent before:opacity-0 hover:before:opacity-100 before:transition-opacity"
+            className="w-full group flex items-center justify-center gap-3 px-6 py-4 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-sm hover:shadow-md"
           >
             <svg
-              className="w-6 h-6"
+              className="w-5 h-5"
               viewBox="0 0 24 24"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -86,12 +80,12 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
                 fill="#EA4335"
               />
             </svg>
-            <span className="text-gray-900 font-semibold text-sm relative z-10">Continue with Google</span>
+            <span className="text-gray-900 font-medium text-sm">Continue with Google</span>
           </button>
         </div>
 
         {isLoading && (
-          <div className="mt-8 flex items-center justify-center gap-3 text-sm text-gray-600 relative z-10">
+          <div className="mt-6 flex items-center justify-center gap-3 text-sm text-gray-700">
             <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>

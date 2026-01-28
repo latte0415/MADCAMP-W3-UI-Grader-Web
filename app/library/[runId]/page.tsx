@@ -244,7 +244,7 @@ export default function EvaluationDetailPage() {
                 <div className="mb-12">
                     <button
                         onClick={() => router.back()}
-                        className="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors mb-6 group"
+                        className="flex items-center gap-2 text-gray-600 hover:text-gray-950 transition-colors mb-6 group font-medium"
                     >
                         <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -253,13 +253,13 @@ export default function EvaluationDetailPage() {
                     </button>
                     <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                         <div>
-                            <h1 className="text-4xl font-bold text-gray-900 mb-2 truncate max-w-2xl">
+                            <h1 className="text-4xl font-bold text-gray-950 mb-2 truncate max-w-2xl">
                                 {evaluation.target_url}
                             </h1>
-                            <p className="text-gray-500 font-mono text-sm">Run ID: {runId}</p>
+                            <p className="text-gray-600 font-mono text-sm">Run ID: {runId}</p>
                         </div>
-                        <div className={`px-8 py-4 rounded-2xl border-2 shadow-sm ${getScoreBgColor(evaluation.total_score)}`}>
-                            <div className="text-sm font-semibold text-gray-600 mb-1 uppercase tracking-wider text-center">Final Score</div>
+                        <div className={`px-8 py-5 rounded-2xl border-2 shadow-md ${getScoreBgColor(evaluation.total_score)}`}>
+                            <div className="text-sm font-bold text-gray-700 mb-2 uppercase tracking-wider text-center">Final Score</div>
                             <div className={`text-5xl font-black ${getScoreColor(evaluation.total_score)} text-center`}>
                                 {evaluation.total_score.toFixed(1)}
                             </div>
@@ -274,13 +274,13 @@ export default function EvaluationDetailPage() {
                         { label: 'Efficiency', score: evaluation.efficiency_score },
                         { label: 'User Control', score: evaluation.control_score },
                     ].map((stat) => (
-                        <div key={stat.label} className="bg-white/70 backdrop-blur-xl border border-gray-200/60 rounded-2xl p-6 shadow-sm">
-                            <div className="text-gray-500 text-sm font-medium mb-2">{stat.label}</div>
+                        <div key={stat.label} className="bg-white/90 backdrop-blur-xl border-2 border-gray-200 rounded-2xl p-6 shadow-md">
+                            <div className="text-gray-700 text-sm font-semibold mb-3">{stat.label}</div>
                             <div className="flex items-end justify-between">
                                 <div className={`text-3xl font-bold ${getScoreColor(stat.score)}`}>
                                     {stat.score.toFixed(1)}
                                 </div>
-                                <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden">
+                                <div className="w-24 h-2.5 bg-gray-200 rounded-full overflow-hidden">
                                     <div
                                         className={`h-full transition-all duration-1000 ${stat.score >= 70 ? 'bg-green-500' : stat.score >= 40 ? 'bg-yellow-500' : 'bg-red-500'}`}
                                         style={{ width: `${stat.score}%` }}
@@ -292,30 +292,30 @@ export default function EvaluationDetailPage() {
                 </div>
 
                 {/* Tabs */}
-                <div className="flex items-center gap-8 border-b border-gray-200 mb-12">
+                <div className="flex items-center gap-8 border-b-2 border-gray-200 mb-12">
                     <button
                         onClick={() => setActiveTab('nodes')}
-                        className={`pb-4 text-sm font-bold uppercase tracking-wider transition-colors relative ${activeTab === 'nodes' ? 'text-gray-900' : 'text-gray-400 hover:text-gray-600'}`}
+                        className={`pb-4 text-sm font-bold uppercase tracking-wider transition-colors relative ${activeTab === 'nodes' ? 'text-gray-950' : 'text-gray-500 hover:text-gray-700'}`}
                     >
                         Pages (Nodes)
-                        <span className="ml-2 bg-gray-100 text-gray-600 py-0.5 px-2 rounded-full text-xs">{evaluation.node_count}</span>
-                        {activeTab === 'nodes' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900" />}
+                        <span className={`ml-2 py-0.5 px-2.5 rounded-full text-xs font-semibold ${activeTab === 'nodes' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-700'}`}>{evaluation.node_count}</span>
+                        {activeTab === 'nodes' && <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-950" />}
                     </button>
                     <button
                         onClick={() => setActiveTab('interactions')}
-                        className={`pb-4 text-sm font-bold uppercase tracking-wider transition-colors relative ${activeTab === 'interactions' ? 'text-gray-900' : 'text-gray-400 hover:text-gray-600'}`}
+                        className={`pb-4 text-sm font-bold uppercase tracking-wider transition-colors relative ${activeTab === 'interactions' ? 'text-gray-950' : 'text-gray-500 hover:text-gray-700'}`}
                     >
                         Interactions
-                        <span className="ml-2 bg-gray-100 text-gray-600 py-0.5 px-2 rounded-full text-xs">{evaluation.edge_count}</span>
-                        {activeTab === 'interactions' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900" />}
+                        <span className={`ml-2 py-0.5 px-2.5 rounded-full text-xs font-semibold ${activeTab === 'interactions' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-700'}`}>{evaluation.edge_count}</span>
+                        {activeTab === 'interactions' && <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-950" />}
                     </button>
                     <button
                         onClick={() => setActiveTab('workflows')}
-                        className={`pb-4 text-sm font-bold uppercase tracking-wider transition-colors relative ${activeTab === 'workflows' ? 'text-gray-900' : 'text-gray-400 hover:text-gray-600'}`}
+                        className={`pb-4 text-sm font-bold uppercase tracking-wider transition-colors relative ${activeTab === 'workflows' ? 'text-gray-950' : 'text-gray-500 hover:text-gray-700'}`}
                     >
                         Workflows
-                        <span className="ml-2 bg-gray-100 text-gray-600 py-0.5 px-2 rounded-full text-xs">{evaluation.path_count}</span>
-                        {activeTab === 'workflows' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gray-900" />}
+                        <span className={`ml-2 py-0.5 px-2.5 rounded-full text-xs font-semibold ${activeTab === 'workflows' ? 'bg-gray-900 text-white' : 'bg-gray-200 text-gray-700'}`}>{evaluation.path_count}</span>
+                        {activeTab === 'workflows' && <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-950" />}
                     </button>
                 </div>
 
@@ -328,10 +328,10 @@ export default function EvaluationDetailPage() {
                                     {/* Top: Metadata */}
                                     <div className="mb-6">
                                         <div className="flex items-center gap-4 mb-2">
-                                            <span className="px-3 py-1 bg-gray-900 text-white text-xs font-bold rounded-full">PAGE {index + 1}</span>
-                                            <h3 className="text-lg font-bold text-gray-800 truncate">{node.url}</h3>
+                                            <span className="px-3 py-1.5 bg-gray-900 text-white text-xs font-bold rounded-full">PAGE {index + 1}</span>
+                                            <h3 className="text-lg font-bold text-gray-950 truncate">{node.url}</h3>
                                         </div>
-                                        <p className="text-gray-400 text-xs font-mono">Node ID: {node.node_id}</p>
+                                        <p className="text-gray-600 text-xs font-mono">Node ID: {node.node_id}</p>
                                     </div>
 
                                     <div className="flex gap-8">
@@ -367,24 +367,24 @@ export default function EvaluationDetailPage() {
                                         <div className="w-[35%]">
                                             <div className="space-y-6">
                                                 <div className="flex items-center justify-between mb-2">
-                                                    <h4 className="text-sm font-bold text-gray-500 uppercase tracking-widest">Heuristic Checklist</h4>
+                                                    <h4 className="text-sm font-bold text-gray-700 uppercase tracking-widest">Heuristic Checklist</h4>
                                                 </div>
                                                 <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2 scrollbar-hide">
                                                     {[...node.learnability_items, ...node.control_items].map((item, idx) => (
-                                                        <div key={idx} className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
+                                                        <div key={idx} className="bg-white border-2 border-gray-200 rounded-xl p-4 shadow-sm">
                                                             <div className="flex items-start justify-between gap-4 mb-3">
                                                                 <div>
-                                                                    <span className="text-xs font-bold text-gray-400 uppercase tracking-tighter">&lt;{item.element.tag}&gt;</span>
-                                                                    <p className="text-sm font-semibold text-gray-800">{item.element.text || '(No text)'}</p>
+                                                                    <span className="text-xs font-bold text-gray-500 uppercase tracking-tighter">&lt;{item.element.tag}&gt;</span>
+                                                                    <p className="text-sm font-semibold text-gray-900 mt-1">{item.element.text || '(No text)'}</p>
                                                                 </div>
                                                                 <div className="flex flex-col items-end">
-                                                                    <span className="text-[10px] font-mono text-gray-400">{item.element.class}</span>
+                                                                    <span className="text-xs font-mono text-gray-600">{item.element.class}</span>
                                                                 </div>
                                                             </div>
                                                             <div className="space-y-2">
                                                                 {item.checks.map((check, cidx) => (
-                                                                    <div key={cidx} className={`flex items-start gap-2 p-2 rounded-lg text-xs ${check.status === 'PASS' ? 'bg-green-50/50 text-green-700' : 'bg-red-50 text-red-700'}`}>
-                                                                        <svg className={`w-4 h-4 mt-0.5 shrink-0 ${check.status === 'PASS' ? 'text-green-500' : 'text-red-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                    <div key={cidx} className={`flex items-start gap-2 p-2.5 rounded-lg text-xs ${check.status === 'PASS' ? 'bg-green-50 border border-green-200 text-green-800' : 'bg-red-50 border border-red-200 text-red-800'}`}>
+                                                                        <svg className={`w-4 h-4 mt-0.5 shrink-0 ${check.status === 'PASS' ? 'text-green-600' : 'text-red-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                             {check.status === 'PASS' ? (
                                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                                                                             ) : (
@@ -393,7 +393,7 @@ export default function EvaluationDetailPage() {
                                                                         </svg>
                                                                         <div>
                                                                             <span className="font-bold mr-2">{check.name}</span>
-                                                                            <span className="opacity-80">{check.message}</span>
+                                                                            <span>{check.message}</span>
                                                                         </div>
                                                                     </div>
                                                                 ))}
@@ -414,7 +414,7 @@ export default function EvaluationDetailPage() {
 
                     {activeTab === 'interactions' && (
                         <div className="space-y-12">
-                            <h2 className="text-2xl font-bold text-gray-900 border-b border-gray-200 pb-4">Interaction Analysis (Grouped by Source Node)</h2>
+                            <h2 className="text-2xl font-bold text-gray-950 border-b-2 border-gray-200 pb-4">Interaction Analysis (Grouped by Source Node)</h2>
                             {evaluation.edge_evaluations?.length === 0 && (
                                 <p className="text-gray-500 italic">No interaction data available.</p>
                             )}
@@ -432,9 +432,9 @@ export default function EvaluationDetailPage() {
                                 const sourceNode = evaluation.node_evaluations?.find(n => n.node_id === sourceId)
 
                                 return (
-                                    <div key={sourceId} className="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+                                    <div key={sourceId} className="bg-white border-2 border-gray-200 rounded-2xl overflow-hidden shadow-md">
                                         {/* Source Node Header */}
-                                        <div className="bg-gray-50 p-6 border-b border-gray-200">
+                                        <div className="bg-gray-50 p-6 border-b-2 border-gray-200">
                                             <div className="flex gap-8">
                                                 {/* Left: Source Image */}
                                                 <div className="w-[65%] shrink-0">
@@ -467,7 +467,7 @@ export default function EvaluationDetailPage() {
 
                                                 {/* Right: Heuristic Checklist (Interaction List) */}
                                                 <div className="w-[35%] flex flex-col justify-center">
-                                                    <h4 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-4">Interactions & Checks</h4>
+                                                    <h4 className="text-sm font-bold text-gray-700 uppercase tracking-widest mb-4">Interactions & Checks</h4>
                                                     <div className="space-y-4 max-h-[300px] overflow-y-auto pr-2 scrollbar-hide">
 
                                                         {/* List of Edges from this Source */}
@@ -477,8 +477,8 @@ export default function EvaluationDetailPage() {
                                                                     <div className="flex flex-col md:flex-row justify-between gap-4 mb-4">
                                                                         <div className="flex-1">
                                                                             <div className="flex items-center gap-2 mb-1">
-                                                                                <span className="bg-blue-50 text-blue-600 text-[10px] font-bold px-2 py-0.5 rounded uppercase border border-blue-100">Action</span>
-                                                                                <span className="font-bold text-gray-800 break-all text-sm">{edge.action}</span>
+                                                                                <span className="bg-blue-50 text-blue-700 text-xs font-bold px-2.5 py-1 rounded-md uppercase border-2 border-blue-200">Action</span>
+                                                                                <span className="font-bold text-gray-950 break-all text-sm">{edge.action}</span>
                                                                             </div>
                                                                         </div>
 
@@ -486,8 +486,8 @@ export default function EvaluationDetailPage() {
                                                                             {[
                                                                                 { l: 'E', s: edge.result?.efficiency?.score || 0 },
                                                                             ].map((item) => (
-                                                                                <div key={item.l} className="flex items-center gap-1 bg-gray-50 rounded px-2 py-1 border border-gray-100">
-                                                                                    <span className="text-[10px] text-gray-500 font-bold uppercase">{item.l}</span>
+                                                                                <div key={item.l} className="flex items-center gap-1.5 bg-gray-50 rounded-md px-3 py-1.5 border-2 border-gray-200">
+                                                                                    <span className="text-xs text-gray-700 font-bold uppercase">E</span>
                                                                                     <span className={`text-sm font-bold ${getScoreColor(item.s)}`}>{item.s.toFixed(0)}</span>
                                                                                 </div>
                                                                             ))}
@@ -497,15 +497,15 @@ export default function EvaluationDetailPage() {
                                                                     {/* Warning/Error Highlights Only */}
                                                                     <div className="space-y-2">
                                                                         {edge.result?.efficiency?.latency && edge.result.efficiency.latency.status === 'Slow' && (
-                                                                            <div className="flex items-center gap-2 text-xs text-red-600 bg-red-50 p-2 rounded border border-red-100">
-                                                                                <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                                                            <div className="flex items-center gap-2 text-xs text-red-800 bg-red-50 p-2.5 rounded-lg border-2 border-red-200">
+                                                                                <svg className="w-4 h-4 shrink-0 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                                                                                 <span className="font-bold">Slow Response ({edge.result.efficiency.latency.duration_ms}ms)</span>
-                                                                                <span className="text-red-500 truncate">{edge.result.efficiency.latency.description}</span>
+                                                                                <span className="text-red-700 truncate">{edge.result.efficiency.latency.description}</span>
                                                                             </div>
                                                                         )}
                                                                         {[...(edge.result?.efficiency?.failed || [])].map((check, i) => (
-                                                                            <div key={i} className="flex items-start gap-2 text-xs text-red-600 bg-red-50/50 p-1.5 rounded">
-                                                                                <svg className="w-3 h-3 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                                                                            <div key={i} className="flex items-start gap-2 text-xs text-red-800 bg-red-50 p-2 rounded-lg border border-red-200">
+                                                                                <svg className="w-3.5 h-3.5 mt-0.5 shrink-0 text-red-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                                                                                 <span className="font-semibold shrink-0">{check.check}:</span>
                                                                                 <span className="truncate">{check.message}</span>
                                                                             </div>
@@ -536,8 +536,8 @@ export default function EvaluationDetailPage() {
                                         <div className="flex flex-col md:flex-row justify-between gap-6 mb-6">
                                             <div className="flex-1">
                                                 <div className="flex items-center gap-2 mb-2">
-                                                    <span className="bg-purple-100 text-purple-700 text-xs font-bold px-2 py-1 rounded uppercase tracking-wide">Path {wf.path_index}</span>
-                                                    <h3 className="text-lg font-bold text-gray-800 break-all font-mono">{wf.path_summary}</h3>
+                                                    <span className="bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1.5 rounded-md uppercase tracking-wide border border-purple-200">Path {wf.path_index}</span>
+                                                    <h3 className="text-lg font-bold text-gray-950 break-all font-mono">{wf.path_summary}</h3>
                                                 </div>
                                             </div>
 
@@ -546,9 +546,9 @@ export default function EvaluationDetailPage() {
                                                 {[
                                                     { l: 'Eff', s: wf.result?.efficiency?.score || 0 },
                                                 ].map((item) => (
-                                                    <div key={item.l} className="flex flex-col items-center justify-center bg-gray-50 rounded-lg p-2 w-16">
-                                                        <span className="text-[10px] text-gray-500 font-bold uppercase">{item.l}</span>
-                                                        <span className={`text-lg font-bold ${getScoreColor(item.s)}`}>{item.s.toFixed(0)}</span>
+                                                    <div key={item.l} className="flex flex-col items-center justify-center bg-gray-50 border-2 border-gray-200 rounded-lg p-3 w-20">
+                                                        <span className="text-xs text-gray-700 font-bold uppercase mb-1">{item.l}</span>
+                                                        <span className={`text-xl font-bold ${getScoreColor(item.s)}`}>{item.s.toFixed(0)}</span>
                                                     </div>
                                                 ))}
                                             </div>
@@ -603,8 +603,8 @@ export default function EvaluationDetailPage() {
                                         {/* KLM Breakdown */}
                                         {wf.result?.efficiency?.interaction_efficiency && (
                                             <div className="mb-6">
-                                                <h4 className="text-sm font-bold text-gray-700 mb-2">KLM Efficiency Breakdown</h4>
-                                                <div className="bg-gray-50 rounded-lg p-4 font-mono text-xs overflow-x-auto">
+                                                <h4 className="text-sm font-bold text-gray-800 mb-3">KLM Efficiency Breakdown</h4>
+                                                <div className="bg-gray-50 border-2 border-gray-200 rounded-lg p-4 font-mono text-xs overflow-x-auto">
                                                     <table className="w-full text-left">
                                                         <thead>
                                                             <tr className="border-b border-gray-200 text-gray-500">
@@ -640,19 +640,19 @@ export default function EvaluationDetailPage() {
                                         {/* Fitts's Law Issues */}
                                         {wf.result?.efficiency?.target_size_spacing?.fitts_issues && wf.result.efficiency.target_size_spacing.fitts_issues.length > 0 && (
                                             <div className="mb-6">
-                                                <h4 className="text-sm font-bold text-red-700 mb-2 flex items-center gap-2">
+                                                <h4 className="text-sm font-bold text-red-800 mb-3 flex items-center gap-2">
                                                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
                                                     Fitts's Law & Size Issues
                                                 </h4>
                                                 <div className="space-y-2">
                                                     {wf.result.efficiency.target_size_spacing.fitts_issues.map((issue: any, i: number) => (
-                                                        <div key={i} className="bg-red-50 border border-red-100 rounded-lg p-3 text-sm">
-                                                            <div className="flex justify-between mb-1">
-                                                                <span className="font-bold text-red-800">Step {issue.step}</span>
-                                                                <span className="text-red-600 text-xs font-mono">ID: {issue.ID}</span>
+                                                        <div key={i} className="bg-red-50 border-2 border-red-200 rounded-lg p-3 text-sm">
+                                                            <div className="flex justify-between mb-2">
+                                                                <span className="font-bold text-red-900">Step {issue.step}</span>
+                                                                <span className="text-red-700 text-xs font-mono font-semibold">ID: {issue.ID}</span>
                                                             </div>
-                                                            <p className="text-gray-800 font-medium mb-1">{issue.target}</p>
-                                                            <p className="text-gray-600 text-xs">{issue.message}</p>
+                                                            <p className="text-gray-900 font-semibold mb-1">{issue.target}</p>
+                                                            <p className="text-gray-700 text-xs">{issue.message}</p>
                                                             <div className="mt-2 flex gap-4 text-xs text-gray-500 font-mono">
                                                                 <span>Dist: {issue.distance}px</span>
                                                                 <span>Width: {issue.width}px</span>
@@ -664,11 +664,11 @@ export default function EvaluationDetailPage() {
                                         )}
 
                                         {/* Passed Checks */}
-                                        <div className="space-y-1 mt-4 border-t pt-4">
+                                        <div className="space-y-2 mt-4 border-t-2 border-gray-200 pt-4">
                                             {(wf.result?.efficiency?.passed || []).map((check: any, i: number) => (
-                                                <div key={i} className="flex items-start gap-2 text-sm text-green-700">
-                                                    <svg className="w-4 h-4 mt-0.5 text-green-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                                                    <span>{check.message}</span>
+                                                <div key={i} className="flex items-start gap-2 text-sm text-green-800 bg-green-50 border border-green-200 rounded-lg p-2">
+                                                    <svg className="w-4 h-4 mt-0.5 text-green-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                                    <span className="font-medium">{check.message}</span>
                                                 </div>
                                             ))}
                                         </div>

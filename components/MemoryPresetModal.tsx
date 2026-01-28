@@ -80,24 +80,24 @@ export default function MemoryPresetModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Background overlay - 약한 흐림 처리 */}
+      {/* Background overlay */}
       <div
-        className="absolute inset-0 bg-white/30 backdrop-blur-[8px] animate-in fade-in"
+        className="absolute inset-0 bg-white/90 backdrop-blur-[8px] animate-in fade-in"
         onClick={handleCancel}
       ></div>
 
-      {/* Modal content - 작고 약한 흐림 */}
-      <div className="relative bg-white/60 backdrop-blur-[20px] rounded-2xl shadow-[0_4px_16px_0_rgba(0,0,0,0.1),inset_0_1px_0_0_rgba(255,255,255,0.6)] p-6 w-full max-w-md mx-4 border border-gray-200/40 animate-in fade-in zoom-in-95 duration-200">
+      {/* Modal content */}
+      <div className="relative bg-white/95 backdrop-blur-[20px] rounded-2xl shadow-xl p-6 w-full max-w-md mx-4 border border-gray-200/80 animate-in fade-in zoom-in-95 duration-200">
         {/* Header */}
-        <div className="mb-4">
-          <h2 className="text-xl font-bold text-gray-900 mb-1.5">사전 설정</h2>
-          <p className="text-xs text-gray-600">
+        <div className="mb-5">
+          <h2 className="text-xl font-bold text-gray-950 mb-2">사전 설정</h2>
+          <p className="text-sm text-gray-700 leading-relaxed">
             사전 설정된 ID, PW 등을 입력하면, 그 값을 바탕으로 탐색됩니다.
           </p>
         </div>
 
         {/* Items list */}
-        <div className="space-y-2.5 mb-4 max-h-[300px] overflow-y-auto">
+        <div className="space-y-3 mb-5 max-h-[300px] overflow-y-auto pr-1">
           {items.map((item, index) => (
             <div key={index} className="flex gap-2 items-center">
               <input
@@ -105,19 +105,19 @@ export default function MemoryPresetModal({
                 placeholder="키 (예: username)"
                 value={item.key}
                 onChange={(e) => handleKeyChange(index, e.target.value)}
-                className="w-24 px-3 py-2 bg-white/80 backdrop-blur-[10px] border border-gray-300/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400/30 focus:border-gray-400/60 text-sm text-gray-900 placeholder:text-gray-500/70 shadow-sm"
+                className="w-28 px-3 py-2.5 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400/40 focus:border-gray-400 text-sm text-gray-900 placeholder:text-gray-500 shadow-sm"
               />
               <input
                 type="text"
                 placeholder="값 (예: myuser@example.com)"
                 value={item.value}
                 onChange={(e) => handleValueChange(index, e.target.value)}
-                className="flex-1 px-3 py-2 bg-white/80 backdrop-blur-[10px] border border-gray-300/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400/30 focus:border-gray-400/60 text-sm text-gray-900 placeholder:text-gray-500/70 shadow-sm"
+                className="flex-1 px-3 py-2.5 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-400/40 focus:border-gray-400 text-sm text-gray-900 placeholder:text-gray-500 shadow-sm"
               />
               {items.length > 1 && (
                 <button
                   onClick={() => handleRemoveItem(index)}
-                  className="p-2 text-gray-500 hover:text-red-600 transition-colors flex-shrink-0"
+                  className="p-2 text-gray-500 hover:text-red-600 transition-colors flex-shrink-0 rounded-lg hover:bg-red-50"
                   aria-label="항목 삭제"
                 >
                   <svg
@@ -143,23 +143,23 @@ export default function MemoryPresetModal({
         {canAddMore && (
           <button
             onClick={handleAddItem}
-            className="w-full mb-4 px-3 py-2 bg-gray-100/80 hover:bg-gray-200/80 text-gray-700 rounded-lg transition-colors text-xs font-medium border border-gray-300/50"
+            className="w-full mb-5 px-3 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition-colors text-sm font-medium border border-gray-300"
           >
             + 항목 추가 (최대 {MAX_ITEMS}개)
           </button>
         )}
 
         {/* Footer buttons */}
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <button
             onClick={handleCancel}
-            className="flex-1 px-3 py-2 bg-gray-100/80 hover:bg-gray-200/80 text-gray-700 rounded-lg transition-colors text-sm font-medium"
+            className="flex-1 px-4 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition-colors text-sm font-medium"
           >
             취소
           </button>
           <button
             onClick={handleSave}
-            className="flex-1 px-3 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+            className="flex-1 px-4 py-2.5 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed"
             disabled={!hasValidItems}
           >
             저장
