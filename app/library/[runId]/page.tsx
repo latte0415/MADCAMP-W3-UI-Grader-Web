@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { apiClient } from '@/lib/api/client'
@@ -11,28 +11,51 @@ export default function EvaluationDetailPage() {
     const { runId } = useParams()
     const [evaluation, setEvaluation] = useState<SiteEvaluation | null>(null)
     const [isLoading, setIsLoading] = useState(true)
+    const [isPending, setIsPending] = useState(false) // 분석 진행 중 상태
     const [error, setError] = useState<string | null>(null)
     const router = useRouter()
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_API_URL || 'http://localhost:8000'
 
-    useEffect(() => {
-        const loadEvaluation = async () => {
-            if (!runId) return
+    const loadEvaluation = useCallback(async () => {
+        if (!runId) return
 
-            setIsLoading(true)
-            try {
-                const data = await apiClient.getEvaluation(runId as string)
-                setEvaluation(transformEvaluationData(data))
-            } catch (err) {
-                console.error('API fetch failed:', err)
+        try {
+            const data = await apiClient.getEvaluation(runId as string)
+            setEvaluation(transformEvaluationData(data))
+            setIsPending(false)
+            setError(null)
+        } catch (err: any) {
+            console.error('API fetch failed:', err)
+            // 404 에러인 경우 분석 진행 중으로 처리
+            if (err?.message?.includes('404')) {
+                setIsPending(true)
+                setError(null)
+            } else {
                 setError('평가 결과를 불러오는 데 실패했습니다. 서버 상태를 확인해주세요.')
-            } finally {
-                setIsLoading(false)
+                setIsPending(false)
             }
+        } finally {
+            setIsLoading(false)
         }
-
-        loadEvaluation()
     }, [runId])
+
+    // 초기 로드
+    useEffect(() => {
+        setIsLoading(true)
+        loadEvaluation()
+    }, [loadEvaluation])
+
+    // 분석 진행 중일 때 5초마다 재조회
+    useEffect(() => {
+        if (!isPending) return
+
+        const intervalId = setInterval(() => {
+            console.log('Polling for evaluation result...')
+            loadEvaluation()
+        }, 5000) // 5초마다
+
+        return () => clearInterval(intervalId)
+    }, [isPending, loadEvaluation])
 
     const transformEvaluationData = (data: any): SiteEvaluation => {
         // 네트워크 탭의 실제 JSON 구조에 1:1 매핑 (완전 평면화된 상세 데이터 처리)
@@ -139,11 +162,63 @@ export default function EvaluationDetailPage() {
         )
     }
 
+    // 분석 진행 중 상태
+    if (isPending) {
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-white via-gray-50/50 to-white relative overflow-hidden">
+                <div className="absolute inset-0 bg-[linear-gradient(to_right,#00000008_1px,transparent_1px),linear-gradient(to_bottom,#00000008_1px,transparent_1px)] bg-[size:40px_40px] opacity-40"></div>
+                <TopNavigation />
+                <div className="relative z-10 max-w-4xl mx-auto pt-32 px-4">
+                    <button
+                        onClick={() => router.push('/library')}
+                        className="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors mb-6 group"
+                    >
+                        <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                        Back to Library
+                    </button>
+                    <div className="bg-blue-50/80 backdrop-blur-sm border border-blue-200 rounded-2xl p-12 text-center shadow-lg">
+                        <div className="flex justify-center mb-6">
+                            <div className="relative">
+                                <svg className="animate-spin h-16 w-16 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <h2 className="text-2xl font-bold text-gray-900 mb-3">분석 진행 중</h2>
+                        <p className="text-gray-600 mb-2">웹사이트를 분석하고 있습니다.</p>
+                        <p className="text-gray-500 text-sm mb-6">
+                            전처리 및 평가 과정에 시간이 걸릴 수 있습니다.
+                            <br />
+                            완료되면 자동으로 결과가 표시됩니다.
+                        </p>
+                        <div className="flex items-center justify-center gap-2 text-sm text-blue-600">
+                            <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
+                            <span>5초마다 자동 새로고침 중...</span>
+                        </div>
+                        <p className="text-gray-400 text-xs font-mono mt-4">Run ID: {runId}</p>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     if (error || !evaluation) {
         return (
             <div className="min-h-screen bg-white">
                 <TopNavigation />
                 <div className="max-w-4xl mx-auto pt-32 px-4">
+                    <button
+                        onClick={() => router.push('/library')}
+                        className="flex items-center gap-2 text-gray-500 hover:text-gray-900 transition-colors mb-6 group"
+                    >
+                        <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                        Back to Library
+                    </button>
                     <div className="bg-red-50 border border-red-200 rounded-xl p-6 text-center">
                         <p className="text-red-700 mb-4">{error || '데이터를 찾을 수 없습니다.'}</p>
                         <button
