@@ -186,8 +186,8 @@ export default function LibraryPage() {
         ) : (
           <div className="grid gap-4 sm:gap-6">
             {runs.map((run) => {
-              const isCompleted = run.status === 'completed' && run.evaluation
-              const riskCount = isCompleted ? getRiskCount(run.evaluation.total_score) : null
+              const isCompleted = run.status === 'completed' && run.evaluation !== null
+              const riskCount = isCompleted && run.evaluation ? getRiskCount(run.evaluation.total_score) : null
 
               return (
                 <div
@@ -236,7 +236,7 @@ export default function LibraryPage() {
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
-                      {isCompleted ? (
+                      {isCompleted && run.evaluation ? (
                         <div className={`px-4 py-2 rounded-lg border ${getScoreBgColor(run.evaluation.total_score)}`}>
                           <div className="text-xs text-gray-600 mb-1">총점</div>
                           <div className={`text-2xl font-bold ${getScoreColor(run.evaluation.total_score)}`}>
