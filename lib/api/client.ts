@@ -82,15 +82,29 @@ class ApiClient {
   async analyzeUrl(
     url: string,
     authToken: string,
-    startUrl?: string
+    startUrl?: string,
+    runMemoryPreset?: Record<string, string>
   ): Promise<AnalyzeResponse> {
+    const body: {
+      url: string
+      start_url?: string
+      run_memory_preset?: Record<string, string>
+    } = {
+      url,
+    }
+
+    if (startUrl && startUrl !== url) {
+      body.start_url = startUrl
+    }
+
+    if (runMemoryPreset && Object.keys(runMemoryPreset).length > 0) {
+      body.run_memory_preset = runMemoryPreset
+    }
+
     return this.request<AnalyzeResponse>('/api/evaluation/analyze', {
       method: 'POST',
       authToken,
-      body: JSON.stringify({
-        url,
-        start_url: startUrl || url,
-      }),
+      body: JSON.stringify(body),
     })
   }
 
